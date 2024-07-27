@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 
 export default function Register() {
-    const {setToken} = useContext(AppContext);
+    const { setToken } = useContext(AppContext);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -16,22 +16,35 @@ export default function Register() {
     const [errors, setErrors] = useState({});
 
     async function handleRegister(e) {
+        setErrors({});
         e.preventDefault();
 
-        const res = await fetch("/api/register", {
-            method: "post",
-            body: JSON.stringify(formData)
-        });
+        try {
 
-        const data = res.json();
+            const response = await fetch("/api/register", {
+                method: "post",
+                body: JSON.stringify(formData)
+            });
 
-        if (data.errors) {
-            setErrors(data.errors);
-        } else {
-            localStorage.setItem("token", data.token);
-            setToken(data.token);
-            navigate("/");
+            const data = await response.json();
+            if (response.ok) {
+                localStorage.setItem("token", data.token);
+                setToken(data.token);
+                navigate("/");
+            } else if (response.status === 422) {
+                setErrors(data.errors);
+            } else {
+                console.log("Something went wrong. Status code:", response.status);
+            }
+            
+        } catch (error) {
+            console.error("Something Error:", error);
         }
+    }
+
+    const handleRemoveArray = (nameToRemove) => {
+        const updatedArrayOfArrays = arrayOfArrays.filter((array) => array.name !== nameToRemove);
+        setArrayOfArrays(updatedArrayOfArrays);
     }
 
     return (
