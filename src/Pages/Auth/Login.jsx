@@ -16,29 +16,28 @@ export default function Login() {
     const [inValidCredentials, setInvalidCredentials] = useState(false);
 
     async function handleLogin(e) {
-        setErrors({});
         e.preventDefault();
-        try{
-            
+        try {
+
             const response = await fetch("/api/login", {
                 method: "post",
                 body: JSON.stringify(formData),
             });
 
-            const data = await response.json();
+            const payload = await response.json();
 
             if (response.ok) {
-                localStorage.setItem("token", data.token);
-                setToken(data.token);
+                localStorage.setItem("token", payload.data.token);
+                setToken(payload.data.token);
                 navigate("/");
             } else if (response.status === 422) {
-                setErrors(data.errors);       
+                setErrors(payload.errors);
             } else if (response.status === 401) {
-                // Handle other status codes (e.g., 404, 500)
                 setInvalidCredentials(true);
             } else {
                 console.log("Something went wrong. Status code:", response.status);
             }
+
 
         } catch (error) {
             console.error("Something Error:", error);
@@ -55,8 +54,10 @@ export default function Login() {
                         type="text"
                         placeholder="Email"
                         value={formData.email}
-                        onChange={(e) =>
-                            setFormData({ ...formData, email: e.target.value })
+                        onChange={(e) => {
+                                setFormData({ ...formData, email: e.target.value }),
+                                delete errors.email
+                            }
                         }
                     />
                     {errors.email && <p className="error">{errors.email[0]}</p>}
@@ -67,8 +68,10 @@ export default function Login() {
                         type="password"
                         placeholder="Password"
                         value={formData.password}
-                        onChange={(e) =>
-                            setFormData({ ...formData, password: e.target.value })
+                        onChange={(e) => {
+                                setFormData({ ...formData, password: e.target.value }),
+                                delete errors.password
+                            }   
                         }
                     />
                     {errors.password && <p className="error">{errors.password[0]}</p>}

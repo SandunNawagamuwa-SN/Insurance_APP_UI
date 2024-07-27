@@ -1,9 +1,30 @@
 import { useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 
 export default function Layout () {
-    const {user} = useContext(AppContext)
+    const { user, token, setUser, setToken } = useContext(AppContext);
+    const navigate = useNavigate();
+
+    async function handleLogout(e) {
+        e.preventDefault()
+
+        const response = await fetch('/api/logout', {
+            method:'post',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        const data = await response.json();
+
+        if(response.ok) {
+            setUser(null);
+            setToken(null);
+            localStorage.removeItem("token");
+            navigate('/');
+        }
+    }
 
     return (
         <>
@@ -14,8 +35,11 @@ export default function Layout () {
                     </Link>
 
                     {user ? (
-                        <div className="space-x-4">
+                        <div className="flex items-center space-x-4">
                             <p className="text-slate-400 text-xs">Welcome back {user.name}</p>
+                            <form onSubmit={handleLogout}>
+                                <button className="nav-link">Logout</button>
+                            </form>
                         </div>
                     ) : (
                         <div className="space-x-4">
