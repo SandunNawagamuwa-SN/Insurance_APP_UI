@@ -10,6 +10,7 @@ import './App.css';
 import SignIn from './Pages/Auth/SignIn';
 import Show from './Pages/InsurancePolicies/Show';
 import Edit from './Pages/InsurancePolicies/Edit';
+import PageNotFound from './Pages/PageNotFound';
 
 export default function App() {
     const { user } = useContext(AppContext)
@@ -25,6 +26,7 @@ export default function App() {
                     <Route path='/create' element={user ? <Create /> : <SignIn />} />
                     <Route path="/insurancePolicies/view/:id" element={<Show />} />
                     <Route path="/insurancePolicies/edit/:id" element={user ? <Edit /> : <SignIn />} />
+                    <Route path="*" element={<PageNotFound />} />
                 </Route>
             </Routes>
         </BrowserRouter>
