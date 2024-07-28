@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 export const AppContext = createContext();
 
 export default function AppProvider({ children }) {
-    const [token, setToken] = useState(localStorage.getItem('item'));
+    const [token, setToken] = useState(localStorage.getItem("token"));
     const [user, setUser] = useState();
 
     async function getUser() {
@@ -20,7 +20,7 @@ export default function AppProvider({ children }) {
 
     useEffect(() => {
         if (token) {
-            getUser();
+            getUser()
         }
     }, [token]);
 

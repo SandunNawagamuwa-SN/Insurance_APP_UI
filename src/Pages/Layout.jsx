@@ -16,7 +16,7 @@ export default function Layout () {
             },
         });
 
-        const data = await response.json();
+        console.log('logout')
 
         if(response.ok) {
             setUser(null);
@@ -37,8 +37,11 @@ export default function Layout () {
                     {user ? (
                         <div className="flex items-center space-x-4">
                             <p className="text-slate-400 text-xs">Welcome back {user.name}</p>
+                            <Link to="/create" className="nav-link">
+                                New Policy
+                            </Link>
                             <form onSubmit={handleLogout}>
-                                <button className="nav-link">Logout</button>
+                                <button className="nav-link bg-rose-800">Logout</button>
                             </form>
                         </div>
                     ) : (
