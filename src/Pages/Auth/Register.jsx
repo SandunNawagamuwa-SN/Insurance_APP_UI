@@ -16,7 +16,6 @@ export default function Register() {
     const [errors, setErrors] = useState({});
 
     async function handleRegister(e) {
-        setErrors({});
         e.preventDefault();
 
         try {
@@ -42,34 +41,42 @@ export default function Register() {
         }
     }
 
-    const handleRemoveArray = (nameToRemove) => {
-        const updatedArrayOfArrays = arrayOfArrays.filter((array) => array.name !== nameToRemove);
-        setArrayOfArrays(updatedArrayOfArrays);
-    }
-
     return (
         <>
             <h1 className="title">Register a new account</h1>
 
             <form onSubmit={handleRegister} className="w-1/2 mx-auto space-y-6">
-                <div>
+                <div className="h-10">
                     <input type="text" placeholder="Name" value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+                        onChange={(e) => {
+                            setFormData({ ...formData, name: e.target.value }),
+                            delete errors.name
+                        }} />
                     {errors.name && <p className="error">{errors.name[0]}</p>}
                 </div>
-                <div>
+                <div className="h-10">
                     <input type="text" placeholder="Email" value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                        onChange={(e) => {
+                            setFormData({ ...formData, email: e.target.value }),
+                            delete errors.email
+                        }} />
                     {errors.email && <p className="error">{errors.email[0]}</p>}
                 </div>
-                <div>
+                <div className="h-10">
                     <input type="password" placeholder="Password" value={formData.password}
-                        onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+                        onChange={(e) => {
+                            setFormData({ ...formData, password: e.target.value }),
+                            delete errors.password
+                        }} />
                     {errors.password && <p className="error">{errors.password[0]}</p>}
                 </div>
-                <div>
+                <div className="h-10">
                     <input type="password" placeholder="Confirm Password" value={formData.password_confirmation}
-                        onChange={(e) => setFormData({ ...formData, password_confirmation: e.target.value })} />
+                        onChange={(e) => {
+                            setFormData({ ...formData, password_confirmation: e.target.value }),
+                            delete errors.password
+                        }
+                        } />
                 </div>
                 <button className="primary-btn">Register</button>
             </form>
