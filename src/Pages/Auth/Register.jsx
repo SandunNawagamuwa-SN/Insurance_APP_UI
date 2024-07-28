@@ -25,13 +25,13 @@ export default function Register() {
                 body: JSON.stringify(formData)
             });
 
-            const data = await response.json();
+            const payload = await response.json();
             if (response.ok) {
-                localStorage.setItem("token", data.token);
-                setToken(data.token);
+                localStorage.setItem("token", payload.data.token);
+                setToken(payload.data.token);
                 navigate("/");
             } else if (response.status === 422) {
-                setErrors(data.errors);
+                setErrors(payload.errors);
             } else {
                 console.log("Something went wrong. Status code:", response.status);
             }
@@ -68,15 +68,15 @@ export default function Register() {
                             setFormData({ ...formData, password: e.target.value }),
                             delete errors.password
                         }} />
-                    {errors.password && <p className="error">{errors.password[0]}</p>}
                 </div>
-                <div className="h-10">
+                <div className="h-14">
                     <input type="password" placeholder="Confirm Password" value={formData.password_confirmation}
                         onChange={(e) => {
                             setFormData({ ...formData, password_confirmation: e.target.value }),
                             delete errors.password
                         }
                         } />
+                        {errors.password && <p className="error">{errors.password[0]}</p>}
                 </div>
                 <button className="primary-btn">Register</button>
             </form>
