@@ -105,7 +105,7 @@ export default function Edit() {
                             />
                             {errors.type_of_insurance && <p className="error">{errors.type_of_insurance[0]}</p>}
                         </div>
-                        <div className="h-10">
+                        <div className="h-14">
                             <input type="text" placeholder="Coverage Amount" value={formData.coverage_amount}
                                 onChange={(e) => {
                                     setFormData({ ...formData, coverage_amount: e.target.value }),

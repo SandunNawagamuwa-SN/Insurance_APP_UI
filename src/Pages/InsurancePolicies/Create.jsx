@@ -66,7 +66,7 @@ export default function Create() {
                             setFormData({ ...formData, holder_name: e.target.value }),
                                 delete errors.holder_name
                         }} />
-                    {errors.holder_name && <p className="error">{errors.email[0]}</p>}
+                    {errors.holder_name && <p className="error">{errors.holder_name[0]}</p>}
                 </div>
                 <div className="h-10">
                     <Select
@@ -78,15 +78,16 @@ export default function Create() {
                         }}
 
                     />
-                    {errors.type_of_insurance && <p className="error">{errors.password[0]}</p>}
+                    {errors.type_of_insurance && <p className="error">{errors.type_of_insurance[0]}</p>}
                 </div>
-                <div className="h-10">
+                <div className="h-14">
                     <input type="text" placeholder="Coverage Amount" value={formData.coverage_amount}
                         onChange={(e) => {
                             setFormData({ ...formData, coverage_amount: e.target.value }),
                                 delete errors.coverage_amount
                         }
                         } />
+                        {errors.coverage_amount && <p className="error">{errors.coverage_amount[0]}</p>}
                 </div>
                 <button className="primary-btn">Create Policy</button>
             </form>

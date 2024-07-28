@@ -62,7 +62,7 @@ export default function SignIn() {
                     {errors.email && <p className="error">{errors.email[0]}</p>}
                 </div>
 
-                <div className="h-10">
+                <div className="h-14">
                     <input
                         type="password"
                         placeholder="Password"
