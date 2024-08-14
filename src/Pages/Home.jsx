@@ -38,7 +38,7 @@ export default function Home() {
                         <thead>
                             <tr>
                                 <th>Policy Number</th>
-                                <th>Holder Name</th>
+                                <th>Holder's Name</th>
                                 <th>Insurance Type</th>
                                 <th>Coverage Amount</th>
                                 <th>Actions</th>
